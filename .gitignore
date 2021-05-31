@@ -1,0 +1,6 @@
+*.gem
+*.orig
+
+/.rspec_failures
+/.rubocop-*
+/Gemfile.lock

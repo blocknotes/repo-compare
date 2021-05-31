@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require 'repo-compare/config'
+require 'repo-compare/git_diff'
+require 'repo-compare/git_diff_raw'
+require 'repo-compare/summary'
+
+action = nil
+ARGV.each do |arg|
+  case arg
+  when '-h', '--help'
+    puts <<~HELP
+      Repo Compare: a tool to detect changes between 2 repositories
+
+      Options:
+        -h or --help    : show this help
+        -s or --summary : generate an XML summary of the files changed (useful for CI)
+        -u or --update  : update the config file setting the current hashes to ignore
+    HELP
+    exit 0
+  when '-s', '--summary'
+    action = :summary
+  when '-u', '--update'
+    action = :update
+  end
+end
+
+config = RepoCompare::Config.new
+
+config_hash = config.to_h
+results = config_hash['paths'].map do |path|
+  RepoCompare::GitDiffRaw.new(config_hash, path).call.merge(src: path)
+end
+
+if action == :summary
+  puts RepoCompare::Summary.new(results).to_xml
+else
+  results.each do |res|
+    diff = RepoCompare::GitDiff.new(config_hash, res).call
+    puts diff unless diff.empty?
+  end
+end
+
+config.update(results) if action == :update
