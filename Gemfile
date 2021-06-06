@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gemspec
 
-group :test do
+group :development, :test do
   # Tools
-  gem 'pry-rails'
+  gem 'pry'
 end
