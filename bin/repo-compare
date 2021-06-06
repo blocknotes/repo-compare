@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
-
 # frozen_string_literal: true
 
 require 'repo-compare/config'
+require 'repo-compare/git_remote_update'
 require 'repo-compare/git_diff'
 require 'repo-compare/git_diff_raw'
 require 'repo-compare/summary'
 
+# Check the arguments
 action = nil
 ARGV.each do |arg|
   case arg
@@ -27,20 +28,28 @@ ARGV.each do |arg|
   end
 end
 
+# Load the config options
 config = RepoCompare::Config.new
-
 config_hash = config.to_h
+
+# Update the remote source
+RepoCompare::GitRemoteUpdate.new(config_hash).call
+
+# Compare paths
 results = config_hash['paths'].map do |path|
   RepoCompare::GitDiffRaw.new(config_hash, path).call.merge(src: path)
 end
 
 if action == :summary
+  # Prepare a summary
   puts RepoCompare::Summary.new(results).to_xml
 else
+  # Prepare a detailed diff
   results.each do |res|
     diff = RepoCompare::GitDiff.new(config_hash, res).call
     puts diff unless diff.empty?
   end
 end
 
+# Update the config
 config.update(results) if action == :update
