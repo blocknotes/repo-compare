@@ -30,12 +30,7 @@ module RepoCompare
 
     def update_conf_path(conf, results)
       results.each do |path, hash|
-        # require 'pry'; binding.pry
-        if conf[path]
-          # TODO: update...
-        else
-          conf[path] = hash
-        end
+        conf[path] = hash
       end
     end
   end
