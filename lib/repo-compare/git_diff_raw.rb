@@ -17,6 +17,7 @@ module RepoCompare
       filter_changes
       extract_results
       @context[:success?] = true
+      @context
     end
 
     private

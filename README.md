@@ -1,7 +1,8 @@
 # Repo Compare
-[![gem version](https://badge.fury.io/rb/repo-compare.svg)](https://badge.fury.io/rb/repo-compare) [![specs](https://github.com/blocknotes/repo-compare/actions/workflows/specs.yml/badge.svg)](https://github.com/blocknotes/repo-compare/actions/workflows/specs.yml)
+[![gem version](https://badge.fury.io/rb/repo-compare.svg)](https://badge.fury.io/rb/repo-compare)
+[![specs](https://github.com/blocknotes/repo-compare/actions/workflows/specs.yml/badge.svg)](https://github.com/blocknotes/repo-compare/actions/workflows/specs.yml)
 
-Track changes of another repository.
+Track changes of another public repository.
 
 Features:
 - check multiple paths of a repo;

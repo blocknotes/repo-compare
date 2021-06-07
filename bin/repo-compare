@@ -42,7 +42,7 @@ end
 
 if action == :summary
   # Prepare a summary
-  puts RepoCompare::Summary.new(results).to_xml
+  puts RepoCompare::Summary.new(config_hash, results).to_xml
 else
   # Prepare a detailed diff
   results.each do |res|
