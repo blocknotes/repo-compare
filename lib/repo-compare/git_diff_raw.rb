@@ -16,7 +16,7 @@ module RepoCompare
       compare_repos
       filter_changes
       extract_results
-      @context.merge!(success?: true)
+      @context[:success?] = true
     end
 
     private

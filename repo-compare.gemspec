@@ -14,6 +14,8 @@ Gem::Specification.new do |spec|
   spec.description = 'Track changes of another repo.'
   spec.license     = 'MIT'
 
-  spec.files = Dir['{bin,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
+  spec.files = Dir['bin/repo-compare', 'lib/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
   spec.executables << 'repo-compare'
+
+  spec.required_ruby_version = '>= 2.5.0'
 end
