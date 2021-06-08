@@ -12,7 +12,7 @@ Features:
 
 It can be useful keep track of the changes of a master repo from a forked project, eventually preparing a check in the CI.
 
-**IMPORTANT**: the tool will add the other repository as remote source.
+**IMPORTANT**: the tool will add the other repository as remote source if it's not already present, for this reason it will need write permission. Otherwise you can manually add the remote source (the parameters must match the ones in the config: `source_name` and `source_repo`).
 
 ## Installation
 
