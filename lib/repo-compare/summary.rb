@@ -9,14 +9,15 @@ module RepoCompare
       @config = config
       @count = 0
       @results = results || []
+      @name = @config['source_name'] || 'repo-compare'
     end
 
     def to_xml
-      name = @config['source_name'] || 'repo-compare'
+      testsuite = testcases
       <<~SUMMARY
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="#{name}" tests="#{@count}" skipped="0" failures="#{@count}" errors="#{@count}" time="1" timestamp="#{DateTime.now.iso8601}">
-#{testcases}</testsuite>
+<testsuite name="#{@name}" tests="#{@count}" skipped="0" failures="#{@count}" errors="#{@count}" time="1" timestamp="#{DateTime.now.iso8601}">
+#{testsuite}</testsuite>
       SUMMARY
     end
 

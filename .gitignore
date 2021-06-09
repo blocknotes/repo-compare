@@ -4,3 +4,5 @@
 /.rspec_failures
 /.rubocop-*
 /Gemfile.lock
+
+_misc/
