@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'git'
+
 module RepoCompare
   # Compare 2 repos
   class GitDiffRaw
@@ -12,8 +14,9 @@ module RepoCompare
       @path = path
     end
 
-    def call
-      compare_repos
+    def call(path: Dir.pwd)
+      git = Git.open(path)
+      compare_repos(git)
       filter_changes
       extract_results
       @context[:success?] = true
@@ -22,10 +25,11 @@ module RepoCompare
 
     private
 
-    def compare_repos
-      cmd =  "git diff #{DIFF_OPTIONS} 'remotes/#{@config['source_name']}/#{@config['source_branch']}' -- "
-      cmd += "'#{@config['source_base_path']}/#{@path}' '#{@path}'"
-      @context[:output] = `#{cmd}`.scan(EXP)
+    def compare_repos(git)
+      branch = ['remotes', @config['source_name'], @config['source_branch']].join('/')
+      src_path = "#{@config['source_base_path']}/#{@path}"
+      output = git.lib.send(:command, 'diff', '--cc', '--raw', branch, '--', src_path, @path)
+      @context[:output] = output.scan(EXP)
       @context
     end
 
