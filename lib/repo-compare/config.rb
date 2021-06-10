@@ -7,8 +7,9 @@ module RepoCompare
   class Config
     CONFIG_PATH = '.repo-compare.yml'
 
-    def initialize
-      @config = File.exist?(CONFIG_PATH) ? YAML.load_file(CONFIG_PATH) : {}
+    def initialize(path: Dir.pwd)
+      config_file = Pathname.new(path).join(CONFIG_PATH).to_s
+      @config = File.exist?(config_file) ? YAML.load_file(config_file) : {}
       @config['paths'] ||= []
       @config['ignore'] ||= {}
       @config['source_branch'] ||= 'master'
