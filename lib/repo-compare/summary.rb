@@ -23,13 +23,20 @@ module RepoCompare
 
     private
 
+    def testcase(paths, hash)
+      {
+        name: paths.gsub(/\t/, ' - '),
+        file: paths.split("\t")[-1],
+        details: "hash: #{hash}\nfile: #{paths}"
+      }
+    end
+
     def testcases
       @results.map do |result|
         result[:results].map do |paths, hash|
           @count += 1
-          name = paths.gsub(/\t/, ' - ')
-          file = paths.split("\t")[-1]
-          "<testcase name=\"#{name}\" file=\"#{file}\" time=\"0\"><failure>hash: #{hash}\nfile: #{paths}</failure></testcase>"
+          t = testcase(paths, hash)
+          "<testcase name=\"#{t[:name]}\" file=\"#{t[:file]}\" time=\"0\"><failure>#{t[:details]}</failure></testcase>"
         end.join("\n")
       end.join("\n")
     end
