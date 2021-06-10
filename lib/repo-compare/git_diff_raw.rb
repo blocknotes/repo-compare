@@ -43,7 +43,7 @@ module RepoCompare
     end
 
     def filter_changes
-      ignore = @config['ignore'][@path] || []
+      ignore = @config['ignore'][@path] || {}
       @context[:output].reject! { |line| line[0] == line[1] || ignore_changes?(ignore, line) }
       @context
     end
