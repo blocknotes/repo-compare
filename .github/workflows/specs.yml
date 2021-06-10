@@ -3,9 +3,11 @@ name: Specs
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   test:
@@ -13,7 +15,10 @@ jobs:
 
     strategy:
       matrix:
-        ruby: ['2.5', '2.6', '2.7']
+        ruby:
+          - '2.5'
+          - '2.6'
+          - '2.7'
 
     steps:
       - name: Checkout
