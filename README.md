@@ -36,6 +36,8 @@ paths:
 
 Alternative option, install it at system level: `gem install repo-compare`
 
+Please take a look at the [example1](https://github.com/blocknotes/repo-compare/tree/example1) branch for a installation and usage example.
+
 ## Usage
 
 The tool accepts some command line option:
