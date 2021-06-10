@@ -27,7 +27,8 @@ module RepoCompare
 
     def compare_repos(git)
       branch = ['remotes', @config['source_name'], @config['source_branch']].join('/')
-      src_path = "#{@config['source_base_path']}/#{@path}"
+      base_path = (@config['source_base_path'] || '').strip
+      src_path = base_path.empty? ? @path : "#{base_path}/#{@path}"
       output = git.lib.send(:command, 'diff', '--cc', '--raw', branch, '--', src_path, @path)
       @context[:output] = output.scan(EXP)
       @context
