@@ -6,7 +6,7 @@ module RepoCompare
   # Compare 2 repos
   class GitDiffRaw
     DIFF_OPTIONS = '--cc --raw'
-    EXP = /:\w+ \w+ (?<src>\w+) (?<dst>\w+) (?<status>\w+)\t(?<path>.+)/.freeze
+    EXP = /:+((?:\w+ {0,1})+) (\w+)\t(.+)/.freeze
 
     def initialize(config, path)
       @config = config
@@ -35,10 +35,10 @@ module RepoCompare
     end
 
     def extract_results
-      @context[:output].sort_by! { |item| item[3] }
+      @context[:output].sort_by! { |item| item[-1] }
       @context[:results] = {}
       @context[:output].each_with_object(@context[:results]) do |item, ret|
-        ret[item[3]] = item[0]
+        ret[item[-1]] = item[0]
       end
       @context
     end
@@ -50,7 +50,7 @@ module RepoCompare
     end
 
     def ignore_changes?(ignore, line)
-      path = line[3]
+      path = line[-1]
       ignore[path] == '-' || ignore[path] == line[0]
     end
   end
