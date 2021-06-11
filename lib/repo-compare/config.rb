@@ -10,7 +10,7 @@ module RepoCompare
     def initialize(path: Dir.pwd)
       config_file = Pathname.new(path).join(CONFIG_PATH).to_s
       @config = File.exist?(config_file) ? YAML.load_file(config_file) : {}
-      @config['paths'] ||= []
+      @config['paths'] ||= ['./']
       @config['ignore'] ||= {}
       @config['source_branch'] ||= 'master'
     end

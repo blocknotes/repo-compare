@@ -33,7 +33,7 @@ RSpec.describe RepoCompare::Config do
     subject(:to_h) { described_class.new.to_h }
 
     it 'returns the initial config' do
-      expected_config = { 'ignore' => {}, 'paths' => [], 'source_branch' => 'master' }
+      expected_config = { 'ignore' => {}, 'paths' => ['./'], 'source_branch' => 'master' }
 
       expect(to_h).to eq expected_config
     end
