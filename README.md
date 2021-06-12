@@ -23,6 +23,8 @@ To update the local config file and ignore the last changes: `bundle exec repo-c
 
 Take a look to the [.repo-compare.yml](.repo-compare.yml) config file for extra options. Any file can be ignored using `"-"` in the `ignore` list.
 
+There's also an example GitHub action: [compare](https://github.com/blocknotes/repo-compare/actions/workflows/compare.yml)
+
 ### Standard output
 
 The output of `bundle exec repo-compare` will be like:

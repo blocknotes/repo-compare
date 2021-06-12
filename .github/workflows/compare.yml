@@ -1,0 +1,22 @@
+---
+name: Compare
+
+on: [push, pull_request]
+
+jobs:
+  compare:
+    name: Repo Compare
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - name: Repo Compare
+        run: bundle exec repo-compare
