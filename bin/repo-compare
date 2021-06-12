@@ -40,12 +40,14 @@ results = config_hash['paths'].map do |path|
   RepoCompare::GitDiffRaw.new(config_hash, path).call.merge(src: path)
 end
 
+changes_detected = false
 if action == :summary
   # Prepare a summary
   puts RepoCompare::Summary.new(config_hash, results).to_xml
 else
   # Prepare a detailed diff
   results.each do |res|
+    changes_detected ||= true
     diff = RepoCompare::GitDiff.new(config_hash, res).call
     puts diff unless diff.empty?
   end
@@ -53,3 +55,5 @@ end
 
 # Update the config
 config.update(results) if action == :update
+
+exit(1) if changes_detected
