@@ -3,60 +3,59 @@
 [![linters](https://github.com/blocknotes/repo-compare/actions/workflows/linters.yml/badge.svg)](https://github.com/blocknotes/repo-compare/actions/workflows/linters.yml)
 [![specs](https://github.com/blocknotes/repo-compare/actions/workflows/specs.yml/badge.svg)](https://github.com/blocknotes/repo-compare/actions/workflows/specs.yml)
 
-Track changes of another public repository.
+This is an example branch used to illustrate how the tool works.
 
-Features:
-- check multiple paths of a repo;
-- create a summary of the changes using git compare (`-s` option);
-- create a detailed list of diffs;
-- ignore some changes to a specific file, saving hashes locally (`-u` option).
+Steps:
+- setup the configuration file: [.repo-compare.yml](.repo-compare.yml);
+- execute the binary: `bundle exec repo-compare`
 
-It can be useful keep track of the changes of a master repo from a forked project, eventually preparing a check in the CI.
-
-**IMPORTANT**: the tool will add the other repository as remote source if it's not already present, for this reason it will need write permission. Otherwise you can manually add the remote source (the parameters must match the ones in the config: `source_name` and `source_repo`).
-
-## Installation
-
-- Add to your Gemfile: `gem 'repo-compare', require: false` (and execute `bundle`)
-- Create a config file in the root of your project (`.repo-compare.yml`):
-
-```yml
----
-source_name: REPO_NAME
-source_branch: master
-source_base_path: OPTIONAL_INTERNAL_PATH
-source_repo: https://github.com/ACCOUNT_NAME/REPO_NAME.git
-paths:
-  - PATH1
-  - PATH2
-  - PATH3
-  - ...
+This will initially add a new remote repository to make the comparison, example:
+```
+origin	git@github.com:blocknotes/repo-compare.git (fetch)
+origin	git@github.com:blocknotes/repo-compare.git (push)
+repo-compare	https://github.com/blocknotes/repo-compare.git (fetch)
+repo-compare	https://github.com/blocknotes/repo-compare.git (push)
 ```
 
-- Execute the binary: `bundle exec repo-compare`
+To create the summary execute: `bundle exec repo-compare -s`
 
-Alternative option, install it at system level: `gem install repo-compare`
+To update the local config file and ignore the last changes: `bundle exec repo-compare -u`
 
-Please take a look at the [example1](https://github.com/blocknotes/repo-compare/tree/example1) branch for a installation and usage example.
+Take a look to the [.repo-compare.yml](.repo-compare.yml) config file for extra options. Any file can be ignored using `"-"` in the `ignore` list.
 
-## Usage
+### Standard output
 
-The tool accepts some command line option:
+The output of `bundle exec repo-compare` will be like:
 
-- `-h` or `--help`    : show this help
-- `-s` or `--summary` : generate an XML summary of the files changed (useful for CI)
-- `-u` or `--update`  : update the config file setting the current hashes to ignore
-
-## Do you like it? Star it!
-
-If you use this component just star it. A developer is more motivated to improve a project when there is some interest.
-
-Or consider offering me a coffee, it's a small thing but it is greatly appreciated: [about me](https://www.blocknot.es/about-me).
-
-## Contributors
-
-- [Mattia Roccoberton](https://blocknot.es/): author
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](MIT-LICENSE).
+```diff
+diff --git a/.rspec b/.rspec
+deleted file mode 100644
+index 5be63fc..0000000
+--- a/.rspec
++++ /dev/null
+@@ -1,2 +0,0 @@
+---require spec_helper
+---format documentation
+diff --git a/lib/new_file.txt b/lib/new_file.txt
+new file mode 100644
+index 0000000..0ee3895
+--- /dev/null
++++ b/lib/new_file.txt
+@@ -0,0 +1 @@
++Some content
+diff --git a/spec/spec_helper.rb b/spec/spec_helper.rb
+index faadb3c..aee032d 100644
+--- a/spec/spec_helper.rb
++++ b/spec/spec_helper.rb
+@@ -7,10 +7,8 @@ RSpec.configure do |config|
+   config.expect_with :rspec do |expectations|
+     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+   end
+-
+   config.mock_with :rspec do |mocks|
+     mocks.verify_partial_doubles = true
+   end
+-
+   config.shared_context_metadata_behavior = :apply_to_host_groups
+ end
+```
