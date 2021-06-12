@@ -1,0 +1,11 @@
+---
+source_name: repo-compare
+source_branch: main
+source_repo: https://github.com/blocknotes/repo-compare.git
+paths:
+- "./"
+ignore:
+  "./":
+    ".github/workflows/compare.yml": 000000 100644 0000000 87e219f
+    ".repo-compare.yml": "-"
+    README.md: "-"
