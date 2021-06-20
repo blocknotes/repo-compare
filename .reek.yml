@@ -2,3 +2,7 @@
 exclude_paths:
   - bin/*
   - vendor/**/*
+
+detectors:
+  ControlParameter:
+    enabled: false
