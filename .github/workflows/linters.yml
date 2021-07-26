@@ -33,6 +33,5 @@ jobs:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           reviewdog -fail-on-error -reporter=github-pr-review -runners=fasterer,rubocop
-        # reek,
 
         # NOTE: check with: reviewdog -fail-on-error -reporter=github-pr-review -runners=fasterer -diff="git diff" -tee
